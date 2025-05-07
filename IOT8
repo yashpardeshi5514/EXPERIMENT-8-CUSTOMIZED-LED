@@ -59,3 +59,52 @@ except KeyboardInterrupt:
     RUNNING=False
     print('Quit')
     GPIO.cleanup()
+
+
+
+
+
+
+
+
+int greenLED = 2;   // Pin for green LED
+int yellowLED = 3;  // Pin for yellow LED
+int redLED = 4;     // Pin for red LED
+
+void setup() {
+  pinMode(greenLED, OUTPUT);
+  pinMode(yellowLED, OUTPUT);
+  pinMode(redLED, OUTPUT);
+  
+  Serial.begin(9600);  // Start serial communication
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    char input = Serial.read();
+
+    // Turn off all LEDs before applying new state
+    digitalWrite(greenLED, LOW);
+    digitalWrite(yellowLED, LOW);
+    digitalWrite(redLED, LOW);
+
+    if (input == 'B') {
+      // Blink green LED 5 times
+      for (int i = 0; i < 5; i++) {
+        digitalWrite(greenLED, HIGH);
+        delay(250);
+        digitalWrite(greenLED, LOW);
+        delay(250);
+      }
+    } 
+    else if (input == 'g') {
+      digitalWrite(greenLED, HIGH);
+    } 
+    else if (input == 'y') {
+      digitalWrite(yellowLED, HIGH);
+    } 
+    else if (input == 'r') {
+      digitalWrite(redLED, HIGH);
+    }
+  }
+}
